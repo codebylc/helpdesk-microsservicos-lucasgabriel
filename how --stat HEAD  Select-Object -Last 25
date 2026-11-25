@@ -1,0 +1,90 @@
+[33mcommit a44f39dbd65fcdb3fdc016280de4aee7e41384de[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: codebylc <codebylc@gmail.com>
+Date:   Wed Nov 25 17:33:22 2026 -0300
+
+    separa o serviço de Inventário com banco próprio.
+
+ .github/dependabot.yml                        |  14 [32m+++[m
+ .github/workflows/testes.yml                  |  22 [32m++++[m
+ .gitignore                                    |   6 [32m++[m
+ DESAFIO.md                                    | 131 [32m++++++++++++++++++++++[m
+ Dockerfile                                    |  16 [32m+++[m
+ SECURITY.md                                   |  37 [32m+++++++[m
+ app/__init__.py                               |   0
+ app/auth/__init__.py                          |   1 [32m+[m
+ app/auth/dependencias.py                      |  41 [32m+++++++[m
+ app/auth/limite.py                            |  40 [32m+++++++[m
+ app/auth/rotas.py                             |  51 [32m+++++++++[m
+ app/auth/senhas.py                            |  37 [32m+++++++[m
+ app/auth/tokens.py                            |  29 [32m+++++[m
+ app/chamados/__init__.py                      |   5 [32m+[m
+ app/chamados/esquemas.py                      |  67 [32m++++++++++++[m
+ app/chamados/modelos.py                       |  39 [32m+++++++[m
+ app/chamados/repositorio.py                   |  35 [32m++++++[m
+ app/chamados/rotas.py                         |  48 [32m+++++++++[m
+ app/chamados/servico.py                       | 126 [32m++++++++++++++++++++++[m
+ app/config.py                                 |  29 [32m+++++[m
+ app/dados_exemplo.py                          |  37 [32m+++++++[m
+ app/database.py                               |  24 [32m+++++[m
+ app/erros.py                                  |  13 [32m+++[m
+ app/inventario/__init__.py                    |   4 [32m+[m
+ app/inventario/esquemas.py                    |  24 [32m+++++[m
+ app/inventario/modelos.py                     |  14 [32m+++[m
+ app/inventario/repositorio.py                 |  27 [32m+++++[m
+ app/inventario/rotas.py                       |  24 [32m+++++[m
+ app/inventario/servico.py                     |  24 [32m+++++[m
+ app/main.py                                   |  91 [32m++++++++++++++++[m
+ app/notificacoes/__init__.py                  |   5 [32m+[m
+ app/notificacoes/esquemas.py                  |  13 [32m+++[m
+ app/notificacoes/modelos.py                   |  16 [32m+++[m
+ app/notificacoes/rotas.py                     |  16 [32m+++[m
+ app/notificacoes/servico.py                   |  25 [32m+++++[m
+ app/seguranca_http.py                         |  37 [32m+++++++[m
+ app/usuarios/__init__.py                      |   4 [32m+[m
+ app/usuarios/esquemas.py                      |  41 [32m+++++++[m
+ app/usuarios/modelos.py                       |  15 [32m+++[m
+ app/usuarios/repositorio.py                   |  27 [32m+++++[m
+ app/usuarios/rotas.py                         |  24 [32m+++++[m
+ app/usuarios/servico.py                       |  38 [32m+++++++[m
+ app/web/app.js                                | 100 [32m+++++++++++++++++[m
+ app/web/estilo.css                            |  27 [32m+++++[m
+ app/web/index.html                            |  49 [32m+++++++++[m
+ docker-compose.yml                            |  22 [32m++++[m
+ docs/01-login.png                             | Bin [31m0[m -> [32m33310[m bytes
+ docs/02-painel.png                            | Bin [31m0[m -> [32m103459[m bytes
+ docs/03-chamado-resolvido.png                 | Bin [31m0[m -> [32m116531[m bytes
+ docs/demo.gif                                 | Bin [31m0[m -> [32m1312950[m bytes
+ pytest.ini                                    |   3 [32m+[m
+ requirements-dev.txt                          |   4 [32m+[m
+ requirements.txt                              |   5 [32m+[m
+ servicos/usuarios/Dockerfile                  |  17 [32m+++[m
+ servicos/usuarios/app/__init__.py             |   0
+ servicos/usuarios/app/auth/__init__.py        |   1 [32m+[m
+ servicos/usuarios/app/auth/dependencias.py    |  41 [32m+++++++[m
+ servicos/usuarios/app/auth/limite.py          |  40 [32m+++++++[m
+ servicos/usuarios/app/auth/rotas.py           |  51 [32m+++++++++[m
+ servicos/usuarios/app/auth/senhas.py          |  37 [32m+++++++[m
+ servicos/usuarios/app/auth/tokens.py          |  33 [32m++++++[m
+ servicos/usuarios/app/config.py               |  22 [32m++++[m
+ servicos/usuarios/app/dados_exemplo.py        |  26 [32m+++++[m
+ servicos/usuarios/app/database.py             |  24 [32m+++++[m
+ servicos/usuarios/app/erros.py                |  13 [32m+++[m
+ servicos/usuarios/app/main.py                 |  62 [32m+++++++++++[m
+ servicos/usuarios/app/seguranca_http.py       |  30 [32m++++++[m
+ servicos/usuarios/app/usuarios/__init__.py    |   1 [32m+[m
+ servicos/usuarios/app/usuarios/esquemas.py    |  41 [32m+++++++[m
+ servicos/usuarios/app/usuarios/modelos.py     |  15 [32m+++[m
+ servicos/usuarios/app/usuarios/repositorio.py |  27 [32m+++++[m
+ servicos/usuarios/app/usuarios/rotas.py       |  24 [32m+++++[m
+ servicos/usuarios/app/usuarios/servico.py     |  38 [32m+++++++[m
+ servicos/usuarios/pytest.ini                  |   3 [32m+[m
+ servicos/usuarios/requirements-dev.txt        |   3 [32m+[m
+ servicos/usuarios/requirements.txt            |   5 [32m+[m
+ servicos/usuarios/tests/conftest.py           |  59 [32m++++++++++[m
+ servicos/usuarios/tests/test_seguranca.py     | 116 [32m++++++++++++++++++++[m
+ servicos/usuarios/tests/test_usuarios.py      |  34 [32m++++++[m
+ tests/conftest.py                             |  60 [32m+++++++++++[m
+ tests/test_chamados.py                        |  71 [32m++++++++++++[m
+ tests/test_seguranca.py                       | 149 [32m++++++++++++++++++++++++++[m
+ tests/test_usuarios_inventario.py             |  26 [32m+++++[m
+ 83 files changed, 2596 insertions(+)
